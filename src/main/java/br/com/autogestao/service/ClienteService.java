@@ -33,5 +33,5 @@ public class ClienteService {
         veiculos.save(v);
     }
     private void validarPlaca(String placa){String p=placa==null?"":placa.replaceAll("[^A-Za-z0-9]",""); if(veiculos.existsByPlacaIgnoreCase(p)) throw new IllegalArgumentException("Já existe um veículo com esta placa.");}
-    private Veiculo novoVeiculo(String placa,String marca,String modelo,String ano){Veiculo v=new Veiculo();v.setPlaca(placa);v.setMarca(marca);v.setModelo(modelo);v.setAno(ano);return v;}
+    private Veiculo novoVeiculo(String placa,String marca,String modelo,Integer ano){Veiculo v=new Veiculo();v.setPlaca(placa);v.setMarca(marca);v.setModelo(modelo);v.setAno(ano);return v;}
 }
