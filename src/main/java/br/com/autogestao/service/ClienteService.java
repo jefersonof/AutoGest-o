@@ -21,8 +21,16 @@ public class ClienteService {
         c.setCep(f.getCep()); c.setRua(f.getRua()); c.setNumero(f.getNumero()); c.setBairro(f.getBairro()); c.setCidade(f.getCidade()); c.setEstado(f.getEstado());
         Veiculo v=novoVeiculo(f.getPlaca(),f.getMarca(),f.getModelo(),f.getAno()); c.adicionarVeiculo(v); return clientes.save(c);
     }
-    @Transactional public void adicionarVeiculo(Long clienteId, Veiculo v){
-        validarPlaca(v.getPlaca()); Cliente c=buscar(clienteId); c.adicionarVeiculo(v); clientes.save(c);
+   @Transactional
+    public void adicionarVeiculo(Long clienteId, Veiculo v) {
+        validarPlaca(v.getPlaca());
+
+        Cliente cliente = buscar(clienteId);
+
+        v.setId(null);
+        v.setCliente(cliente);
+
+        veiculos.save(v);
     }
     private void validarPlaca(String placa){String p=placa==null?"":placa.replaceAll("[^A-Za-z0-9]",""); if(veiculos.existsByPlacaIgnoreCase(p)) throw new IllegalArgumentException("Já existe um veículo com esta placa.");}
     private Veiculo novoVeiculo(String placa,String marca,String modelo,String ano){Veiculo v=new Veiculo();v.setPlaca(placa);v.setMarca(marca);v.setModelo(modelo);v.setAno(ano);return v;}
