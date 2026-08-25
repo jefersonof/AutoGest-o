@@ -1,14 +1,15 @@
-# Guia Git da Equipe — AutoGestão Pro
+# Guia Git da Equipe — Terminal e GitHub Desktop
 
-Este documento define o fluxo Git utilizado pela equipe no desenvolvimento do **AutoGestão Pro**.
+Este guia apresenta o fluxo padrão de trabalho da equipe utilizando duas opções:
 
-O objetivo é manter o código organizado, evitar alterações diretamente nas branches principais e facilitar o trabalho simultâneo de vários desenvolvedores.
+* **Terminal / Git Bash**
+* **GitHub Desktop**
+
+As duas formas produzem o mesmo resultado no Git. Cada desenvolvedor pode utilizar a opção com que se sentir mais confortável.
 
 ---
 
 # 1. Estrutura das Branches
-
-Utilizamos principalmente:
 
 ```text
 main
@@ -18,210 +19,174 @@ develop
 feature/... ou fix/...
 ```
 
-## `main`
-
-Contém versões estáveis do sistema.
-
-Evite desenvolver diretamente nela.
-
-## `develop`
-
-É a branch principal de desenvolvimento.
-
-As funcionalidades e correções são integradas nela antes de chegarem à `main`.
-
-Evite alterar arquivos diretamente na `develop`.
-
-## `feature/`
-
-Utilizada para desenvolver **funcionalidades novas**.
+* `main`: versão estável do projeto.
+* `develop`: integração das alterações em desenvolvimento.
+* `feature/...`: nova funcionalidade.
+* `fix/...`: correção de algo existente.
 
 Exemplos:
 
 ```text
 feature/cadastro-fornecedor
-feature/ordem-servico
 feature/dashboard
-feature/controle-estoque
-```
 
-## `fix/`
-
-Utilizada para **corrigir algo que já existe**.
-
-Exemplos:
-
-```text
-fix/layout-clientes
 fix/salvamento-veiculo
-fix/validacao-cpf
-fix/tipo-dado-ano-veiculo
-```
-
-Regra simples:
-
-```text
-Funcionalidade nova → feature/
-Correção de problema → fix/
+fix/layout-clientes
 ```
 
 ---
 
-# 2. Antes de Começar Qualquer Tarefa
+# 2. Começando uma Nova Tarefa
 
-Antes de alterar qualquer arquivo, vá para a `develop`:
+## Opção A — Terminal
+
+Primeiro vá para a `develop`:
 
 ```bash
 git switch develop
 ```
 
-Depois atualize sua `develop` local:
+Atualize sua branch local:
 
 ```bash
 git pull
 ```
 
-Isso garante que sua nova branch será criada a partir da versão mais recente do projeto.
+Depois crie a branch da tarefa.
 
-O início de uma tarefa normalmente será:
-
-```bash
-git switch develop
-git pull
-```
-
-Depois criamos a branch da tarefa.
-
----
-
-# 3. Criando uma Feature
-
-Se você vai desenvolver algo novo:
+### Nova funcionalidade
 
 ```bash
 git switch -c feature/nome-da-feature
 ```
 
-Exemplo:
-
-```bash
-git switch -c feature/cadastro-fornecedor
-```
-
-O parâmetro `-c` significa:
-
-> criar uma nova branch e já mudar para ela.
-
-Confira:
-
-```bash
-git branch
-```
-
-Exemplo:
-
-```text
-  develop
-* feature/cadastro-fornecedor
-  main
-```
-
-O `*` indica a branch em que você está trabalhando.
-
----
-
-# 4. Criando uma Fix
-
-Se você vai corrigir algo existente:
+### Correção
 
 ```bash
 git switch -c fix/nome-da-correcao
 ```
 
-Exemplo:
+Confira:
 
 ```bash
-git switch -c fix/layout-clientes
+git status
 ```
 
-Confira:
+ou:
 
 ```bash
 git branch
 ```
 
-Exemplo:
-
-```text
-  develop
-* fix/layout-clientes
-  main
-```
-
-Agora faça as alterações necessárias no código.
+O `*` indica a branch atual.
 
 ---
 
-# 5. Verificando as Alterações
+## Opção B — GitHub Desktop
 
-Durante o desenvolvimento utilize:
+1. Abra o projeto no GitHub Desktop.
+2. Clique em **Current Branch**.
+3. Selecione `develop`.
+4. Clique em **Fetch origin**.
+5. Se houver alterações remotas, clique em **Pull origin**.
+6. Clique novamente em **Current Branch**.
+7. Clique em **New Branch**.
+8. Digite o nome da branch.
+
+Para funcionalidade:
+
+```text
+feature/nome-da-feature
+```
+
+Para correção:
+
+```text
+fix/nome-da-correcao
+```
+
+9. Clique em **Create Branch**.
+
+Agora faça as alterações normalmente no código.
+
+---
+
+# 3. Conferindo as Alterações
+
+## Terminal
 
 ```bash
 git status
 ```
 
-Exemplo:
-
-```text
-Changes not staged for commit:
-
-    modified: ClienteService.java
-    modified: clientes.html
-    modified: app.css
-```
-
-O `git status` é um dos comandos mais importantes do Git.
-
-Use sempre que tiver dúvida sobre o estado atual do projeto.
+O Git mostrará os arquivos modificados, criados ou removidos.
 
 ---
 
-# 6. Preparando o Commit
+## GitHub Desktop
 
-Depois de terminar uma etapa do trabalho, confira:
+Os arquivos modificados aparecem automaticamente na área:
 
-```bash
-git status
+```text
+Changes
 ```
 
-Para adicionar todas as alterações:
+É possível marcar ou desmarcar quais arquivos entrarão no commit.
+
+---
+
+# 4. Preparando o Commit
+
+## Terminal
+
+Adicionar todas as alterações:
 
 ```bash
 git add .
 ```
 
-Depois confira novamente:
+Confira:
 
 ```bash
 git status
 ```
 
-Os arquivos deverão aparecer como preparados para commit.
+Os arquivos preparados deverão aparecer em:
+
+```text
+Changes to be committed
+```
 
 ---
 
-# 7. Criando o Commit
+## GitHub Desktop
 
-Para uma funcionalidade:
+Os arquivos alterados aparecem na área **Changes**.
 
-```bash
-git commit -m "feat: adiciona cadastro de fornecedores"
+Deixe marcados somente os arquivos que devem fazer parte daquele commit.
+
+---
+
+# 5. Criando o Commit
+
+Utilizamos mensagens objetivas.
+
+### Nova funcionalidade
+
+```text
+feat: adiciona cadastro de fornecedores
 ```
 
-Para uma correção:
+### Correção
 
-```bash
-git commit -m "fix: corrige salvamento de veículo"
+```text
+fix: corrige salvamento de veículo
+```
+
+### Documentação
+
+```text
+docs: atualiza guia Git da equipe
 ```
 
 Outros prefixos úteis:
@@ -235,31 +200,34 @@ refactor:  reorganização do código
 test:      criação ou alteração de testes
 ```
 
-Evite mensagens vagas como:
+## Terminal
 
-```text
-alterações
-teste
-ajustes
-commit novo
-mudanças
-```
+Exemplo:
 
-Prefira:
-
-```text
-fix: corrige validação da placa
-
-feat: adiciona cadastro de fornecedores
-
-docs: adiciona guia Git da equipe
+```bash
+git commit -m "fix: corrige salvamento de veículo"
 ```
 
 ---
 
-# 8. Enviando a Branch para o GitHub
+## GitHub Desktop
 
-Na primeira vez que enviar uma branch:
+No canto inferior esquerdo:
+
+1. Digite a mensagem em **Summary**.
+2. Clique em:
+
+```text
+Commit to nome-da-branch
+```
+
+---
+
+# 6. Enviando a Branch para o GitHub
+
+## Terminal
+
+No primeiro push:
 
 ```bash
 git push -u origin nome-da-branch
@@ -271,15 +239,9 @@ Exemplo:
 git push -u origin fix/layout-clientes
 ```
 
-O `-u` cria o vínculo entre:
+O `-u` cria o vínculo entre a branch local e a branch remota.
 
-```text
-branch local
-     ↕
-branch remota
-```
-
-Depois disso, enquanto estiver nessa branch, normalmente basta:
+Depois disso, novos envios nessa mesma branch podem ser feitos simplesmente com:
 
 ```bash
 git push
@@ -287,83 +249,189 @@ git push
 
 ---
 
-# 9. Abrindo o Pull Request
+## GitHub Desktop
 
-Depois do `push`, abra o repositório no GitHub.
-
-O GitHub normalmente exibirá:
+No primeiro envio clique em:
 
 ```text
-Compare & pull request
+Publish branch
 ```
 
-Clique nessa opção.
-
-Confira atentamente:
+Depois do primeiro envio, novos commits podem ser enviados utilizando:
 
 ```text
-base: develop
-compare: fix/layout-clientes
+Push origin
 ```
-
-ou:
-
-```text
-base: develop
-compare: feature/cadastro-fornecedor
-```
-
-A ideia é:
-
-```text
-feature/... ──┐
-              ├── Pull Request ──→ develop
-fix/... ──────┘
-```
-
-Não envie diretamente para `main`, salvo quando esse for explicitamente o processo definido pela equipe.
 
 ---
 
-# 10. Descrição do Pull Request
+# 7. Criando o Pull Request
 
-O Pull Request deve explicar claramente o que foi feito.
-
-Exemplo:
+O Pull Request deve seguir:
 
 ```text
-Título:
-
-fix: ajusta layout da tela de clientes
-
-
-Alterações:
-
-- corrige espaçamento dos campos;
-- ajusta comportamento em telas menores;
-- corrige alinhamento dos botões.
-
-
-Testes:
-
-- cadastro de cliente testado;
-- edição testada;
-- layout testado em diferentes tamanhos de tela.
+feature/... ou fix/...
+          ↓
+      Pull Request
+          ↓
+        develop
 ```
 
-Depois:
+## Opção A — Terminal com GitHub CLI
+
+Primeiro, quando necessário, confira se o GitHub CLI está autenticado:
+
+```bash
+gh auth status
+```
+
+Para criar o Pull Request, utilizamos o comando **completo e sem interação**.
+
+### Exemplo com Fix
+
+```bash
+gh pr create --base develop --head fix/layout-clientes --title "fix: ajusta layout da tela de clientes" --body "Corrige o layout e o comportamento da tela de clientes."
+```
+
+### Exemplo com Feature
+
+```bash
+gh pr create --base develop --head feature/cadastro-fornecedor --title "feat: adiciona cadastro de fornecedores" --body "Adiciona a funcionalidade de cadastro de fornecedores ao sistema."
+```
+
+### Exemplo com documentação
+
+```bash
+gh pr create --base develop --head feature/documentacao-git --title "docs: adiciona guia de fluxo Git da equipe" --body "Adiciona o guia completo de Git da equipe, com fluxo pelo terminal e GitHub Desktop, incluindo branches feature e fix, commits, push, Pull Request, merge, stash e exclusao de branches."
+```
+
+Neste comando:
+
+```text
+--base     branch que receberá a alteração
+--head     branch onde o trabalho foi realizado
+--title    título do Pull Request
+--body     descrição do Pull Request
+```
+
+Portanto:
+
+```text
+--base develop
+```
+
+significa:
+
+> O Pull Request será enviado para a `develop`.
+
+E:
+
+```text
+--head fix/layout-clientes
+```
+
+significa:
+
+> As alterações virão da `fix/layout-clientes`.
+
+Visualizar o Pull Request:
+
+```bash
+gh pr view
+```
+
+Listar Pull Requests:
+
+```bash
+gh pr list
+```
+
+---
+
+## Opção B — GitHub Desktop
+
+Depois do push:
+
+1. Clique em **Create Pull Request**.
+2. O navegador abrirá o GitHub.
+3. Confira:
+
+```text
+base: develop
+compare: sua-branch
+```
+
+4. Preencha título e descrição.
+5. Clique em:
 
 ```text
 Create pull request
 ```
 
-Aguarde a revisão da equipe quando houver revisão obrigatória.
+---
+
+# 8. Fazendo o Merge
+
+Antes do merge, confirme que:
+
+* o Pull Request está correto;
+* não existem conflitos;
+* as revisões necessárias foram concluídas;
+* os testes necessários passaram.
+
+## Terminal
+
+Para visualizar o PR antes do merge:
+
+```bash
+gh pr view
+```
+
+Para fazer o merge **sem interação** e apagar a branch remota:
+
+```bash
+gh pr merge nome-da-branch --merge --delete-branch
+```
+
+### Exemplo com Fix
+
+```bash
+gh pr merge fix/layout-clientes --merge --delete-branch
+```
+
+### Exemplo com Feature
+
+```bash
+gh pr merge feature/cadastro-fornecedor --merge --delete-branch
+```
+
+### Exemplo com documentação
+
+```bash
+gh pr merge feature/documentacao-git --merge --delete-branch
+```
+
+Esse comando:
+
+```text
+--merge
+```
+
+faz o merge do Pull Request.
+
+E:
+
+```text
+--delete-branch
+```
+
+remove a branch remota depois do merge.
 
 ---
 
-# 11. Merge do Pull Request
+## Opção B — GitHub / GitHub Desktop
 
-Depois que a alteração estiver revisada e testada:
+Na página do Pull Request:
 
 ```text
 Merge pull request
@@ -375,69 +443,64 @@ Depois:
 Confirm merge
 ```
 
-O resultado será:
+Após o merge, utilize:
 
 ```text
-fix/layout-clientes
-        │
-        │ Pull Request
-        ▼
-     develop
+Delete branch
 ```
 
-ou:
-
-```text
-feature/cadastro-fornecedor
-        │
-        │ Pull Request
-        ▼
-     develop
-```
-
-A equipe também pode optar por:
-
-```text
-Squash and merge
-```
-
-ou:
-
-```text
-Rebase and merge
-```
-
-Siga sempre o padrão definido para o projeto.
+para remover a branch remota caso ela não seja removida automaticamente.
 
 ---
 
-# 12. Atualizando a Develop Depois do Merge
+# 9. Atualizando a Develop Depois do Merge
 
-O merge aconteceu no GitHub.
+Depois do merge feito no GitHub, precisamos atualizar nossa `develop` local.
 
-Sua `develop` local ainda pode estar desatualizada.
-
-Volte para ela:
+## Terminal
 
 ```bash
 git switch develop
-```
-
-Depois:
-
-```bash
 git pull
 ```
 
-Agora sua `develop` local contém a alteração que acabou de ser integrada.
+Agora a `develop` local possui a alteração que foi integrada pelo Pull Request.
 
 ---
 
-# 13. Apagando a Branch Finalizada
+## GitHub Desktop
 
-Depois que o Pull Request foi integrado, a branch da tarefa normalmente não é mais necessária.
+1. Clique em **Current Branch**.
+2. Selecione `develop`.
+3. Clique em:
 
-## Apagar localmente
+```text
+Fetch origin
+```
+
+4. Se houver alterações:
+
+```text
+Pull origin
+```
+
+---
+
+# 10. Apagando a Branch Finalizada
+
+Se utilizamos:
+
+```bash
+gh pr merge nome-da-branch --merge --delete-branch
+```
+
+a branch remota já deverá ter sido removida.
+
+Ainda precisamos verificar/remover a branch local.
+
+## Terminal
+
+Depois de estar na `develop` atualizada:
 
 ```bash
 git branch -d nome-da-branch
@@ -449,303 +512,54 @@ Exemplo:
 git branch -d fix/layout-clientes
 ```
 
-O `-d` é a opção segura.
+Depois limpe referências remotas antigas:
 
-Evite utilizar `-D` sem saber exatamente por que o Git está impedindo a exclusão.
+```bash
+git fetch --prune
+```
 
-## Apagar no remoto
+### Fluxo após o merge
+
+```bash
+git switch develop
+git pull
+git branch -d nome-da-branch
+git fetch --prune
+```
+
+### Caso a branch remota ainda exista
+
+Se ela não tiver sido removida pelo GitHub CLI:
 
 ```bash
 git push origin --delete nome-da-branch
 ```
 
-Exemplo:
-
-```bash
-git push origin --delete fix/layout-clientes
-```
-
-Depois:
-
-```bash
-git fetch --prune
-```
-
-O `--prune` remove referências locais de branches remotas que já não existem.
-
 ---
 
-# 14. Esqueci de Criar a Branch
+## GitHub Desktop
 
-Este é um erro comum.
+Depois de mudar para `develop`:
 
-Você estava na:
+1. Vá em **Branch**.
+2. Escolha **Delete**.
+3. Selecione a branch finalizada.
+
+Se a branch remota ainda existir, ela também pode ser removida pelo GitHub utilizando:
 
 ```text
-develop
-```
-
-e começou a alterar arquivos.
-
-Ainda **não fez commit**.
-
-Primeiro:
-
-```bash
-git status
-```
-
-Se existirem alterações, podemos guardá-las temporariamente.
-
----
-
-# 15. Guardando as Alterações com Stash
-
-Use:
-
-```bash
-git stash -u
-```
-
-O `stash` funciona como uma **gaveta temporária**.
-
-O `-u` também inclui arquivos novos ainda não rastreados.
-
-Confira:
-
-```bash
-git status
-```
-
-O esperado:
-
-```text
-nothing to commit, working tree clean
-```
-
-Suas alterações não foram perdidas.
-
-Temos:
-
-```text
-develop
-   │
-   └── limpa
-
-
-stash
-   │
-   └── alterações guardadas
+Delete branch
 ```
 
 ---
 
-# 16. Atualizando a Develop
+# 11. Esqueci de Criar a Feature ou Fix
 
-Agora:
+Imagine que você começou a programar diretamente na `develop`.
 
-```bash
-git pull
-```
+Não faça commit nela.
 
-Assim você recebe possíveis alterações feitas pelos outros integrantes da equipe.
-
----
-
-# 17. Criando a Branch Correta
-
-Se era uma correção:
-
-```bash
-git switch -c fix/nome-da-correcao
-```
-
-Se era uma funcionalidade:
-
-```bash
-git switch -c feature/nome-da-feature
-```
-
-Exemplo:
-
-```bash
-git switch -c fix/layout-clientes
-```
-
----
-
-# 18. Recuperando as Alterações
-
-Agora:
-
-```bash
-git stash pop
-```
-
-Confira:
-
-```bash
-git status
-```
-
-Suas alterações deverão aparecer novamente.
-
-Mas agora estarão na branch correta:
-
-```text
-develop
-   │
-   └── limpa
-
-
-fix/layout-clientes
-   │
-   ├── arquivo alterado
-   ├── arquivo alterado
-   └── arquivo novo
-```
-
-Continue normalmente:
-
-```bash
-git add .
-
-git commit -m "fix: ajusta layout da tela de clientes"
-
-git push -u origin fix/layout-clientes
-```
-
-Depois abra o Pull Request para:
-
-```text
-fix/layout-clientes → develop
-```
-
----
-
-# 19. Resumo — Esqueci de Criar a Branch
-
-Se ainda **não fez commit**:
-
-```bash
-git status
-
-git stash -u
-
-git pull
-
-git switch -c fix/nome-da-correcao
-
-git stash pop
-```
-
-Depois:
-
-```bash
-git add .
-
-git commit -m "fix: descrição da correção"
-
-git push -u origin fix/nome-da-correcao
-```
-
-Depois:
-
-```text
-Pull Request
-      ↓
-develop
-      ↓
-Merge
-```
-
-Por fim:
-
-```bash
-git switch develop
-
-git pull
-
-git branch -d fix/nome-da-correcao
-
-git push origin --delete fix/nome-da-correcao
-
-git fetch --prune
-```
-
----
-
-# 20. `git stash pop` x `git stash apply`
-
-## `git stash pop`
-
-```bash
-git stash pop
-```
-
-Recupera as alterações e, quando aplicado normalmente, remove aquele stash da lista.
-
-## `git stash apply`
-
-```bash
-git stash apply
-```
-
-Recupera as alterações, mas mantém o stash.
-
-Depois de confirmar que está tudo certo:
-
-```bash
-git stash drop
-```
-
-Para visualizar os stashes existentes:
-
-```bash
-git stash list
-```
-
----
-
-# 21. Conflito no Stash
-
-Se depois de:
-
-```bash
-git stash pop
-```
-
-aparecer:
-
-```text
-CONFLICT
-```
-
-não execute outro `stash pop`.
-
-Primeiro:
-
-```bash
-git status
-```
-
-Veja quais arquivos estão em conflito.
-
-Resolva os conflitos nos arquivos.
-
-Depois:
-
-```bash
-git add .
-```
-
-E continue o processo normalmente.
-
----
-
-# 22. E se Eu Já Fiz Commit na Branch Errada?
-
-Se você já fez um commit diretamente na `develop` ou `main`, **não utilize este procedimento automaticamente**.
+## Opção A — Terminal
 
 Primeiro confira:
 
@@ -753,161 +567,168 @@ Primeiro confira:
 git status
 ```
 
-e:
+Guarde as alterações, incluindo possíveis arquivos novos:
 
 ```bash
-git log --oneline -5
+git stash -u
 ```
 
-Dependendo da situação, poderá ser necessário utilizar:
+Agora a `develop` deve estar limpa.
 
-```text
-reset
-cherry-pick
-revert
-```
-
-Principalmente se o commit já tiver sido enviado ao GitHub.
-
-Não utilize `reset --hard` ou force um `push` em uma branch compartilhada sem entender o impacto para os demais desenvolvedores.
-
----
-
-# 23. Branches Locais e Remotas
-
-Ver branches locais:
-
-```bash
-git branch
-```
-
-Ver branches remotas:
-
-```bash
-git branch -r
-```
-
-Ver todas:
-
-```bash
-git branch -a
-```
-
-Ver branches e seus vínculos:
-
-```bash
-git branch -vv
-```
-
-Exemplo:
-
-```text
-develop                     [origin/develop]
-feature/cadastro-fornecedor [origin/feature/cadastro-fornecedor]
-main                        [origin/main]
-```
-
-`origin/...` representa a referência ao repositório remoto.
-
----
-
-# 24. O que é HEAD?
-
-Ao executar:
-
-```bash
-git branch
-```
-
-pode aparecer:
-
-```text
-* develop
-  main
-```
-
-O `*` indica a branch atual.
-
-O Git utiliza uma referência chamada:
-
-```text
-HEAD
-```
-
-para representar onde você está atualmente.
-
-Podemos imaginar:
-
-```text
-HEAD
- │
- ▼
-develop
-```
-
-No remoto pode aparecer:
-
-```text
-origin/HEAD -> origin/main
-```
-
-Isso indica que a branch padrão do repositório remoto é a `main`.
-
----
-
-# 25. Comandos Rápidos
-
-### Situação atual
-
-```bash
-git status
-```
-
-### Branch atual
-
-```bash
-git branch
-```
-
-### Branches remotas
-
-```bash
-git branch -r
-```
-
-### Todas as branches
-
-```bash
-git branch -a
-```
-
-### Trocar de branch
-
-```bash
-git switch nome-da-branch
-```
-
-### Criar branch
-
-```bash
-git switch -c nome-da-branch
-```
-
-### Atualizar
+Atualize:
 
 ```bash
 git pull
 ```
 
-### Preparar alterações
+Crie a branch correta.
+
+### Correção
+
+```bash
+git switch -c fix/nome
+```
+
+### Funcionalidade
+
+```bash
+git switch -c feature/nome
+```
+
+Recupere suas alterações:
+
+```bash
+git stash pop
+```
+
+Confira:
+
+```bash
+git status
+```
+
+Agora suas alterações estarão na branch correta.
+
+Depois continue normalmente:
 
 ```bash
 git add .
+git commit -m "fix: descrição da correção"
+git push -u origin fix/nome
 ```
 
-### Commit
+Depois crie o Pull Request utilizando o comando completo:
 
 ```bash
+gh pr create --base develop --head fix/nome --title "fix: descrição da correção" --body "Descrição das alterações realizadas."
+```
+
+---
+
+## Opção B — GitHub Desktop
+
+Se você alterou arquivos na branch errada:
+
+1. Não faça commit.
+2. Clique em **Current Branch**.
+3. Clique em **New Branch**.
+4. Crie a `feature/...` ou `fix/...`.
+5. Quando o GitHub Desktop perguntar como tratar as alterações existentes, mantenha as alterações na nova branch.
+6. Confira a área **Changes**.
+7. Faça o commit somente na branch correta.
+8. Publique a branch.
+9. Crie o Pull Request.
+
+Se houver qualquer mensagem inesperada, não descarte as alterações antes de confirmar onde elas estão.
+
+---
+
+# 12. Branches Locais e Remotas
+
+## Terminal
+
+### Locais
+
+```bash
+git branch
+```
+
+### Remotas
+
+```bash
+git branch -r
+```
+
+### Todas
+
+```bash
+git branch -a
+```
+
+### Mais detalhes
+
+```bash
+git branch -vv
+```
+
+Uma branch como:
+
+```text
+fix/layout-clientes
+```
+
+é local.
+
+Uma referência como:
+
+```text
+origin/fix/layout-clientes
+```
+
+representa a branch remota.
+
+---
+
+# 13. Comandos Rápidos
+
+### Ver situação atual
+
+```bash
+git status
+```
+
+### Branches
+
+```bash
+git branch
+git branch -r
+git branch -a
+git branch -vv
+```
+
+### Atualizar a develop
+
+```bash
+git switch develop
+git pull
+```
+
+### Criar branch
+
+```bash
+git switch -c feature/nome
+```
+
+ou:
+
+```bash
+git switch -c fix/nome
+```
+
+### Preparar e criar commit
+
+```bash
+git add .
 git commit -m "mensagem"
 ```
 
@@ -923,13 +744,37 @@ git push -u origin nome-da-branch
 git push
 ```
 
+### Criar Pull Request sem interação
+
+```bash
+gh pr create --base develop --head nome-da-branch --title "titulo do Pull Request" --body "Descricao das alteracoes realizadas."
+```
+
+### Visualizar Pull Request
+
+```bash
+gh pr view
+```
+
+### Listar Pull Requests
+
+```bash
+gh pr list
+```
+
+### Fazer merge e apagar branch remota
+
+```bash
+gh pr merge nome-da-branch --merge --delete-branch
+```
+
 ### Apagar branch local
 
 ```bash
 git branch -d nome-da-branch
 ```
 
-### Apagar branch remota
+### Apagar branch remota manualmente
 
 ```bash
 git push origin --delete nome-da-branch
@@ -941,16 +786,10 @@ git push origin --delete nome-da-branch
 git fetch --prune
 ```
 
-### Guardar alterações temporariamente
+### Guardar alterações
 
 ```bash
 git stash -u
-```
-
-### Recuperar alterações
-
-```bash
-git stash pop
 ```
 
 ### Ver stashes
@@ -959,117 +798,295 @@ git stash pop
 git stash list
 ```
 
+### Recuperar alterações
+
+```bash
+git stash pop
+```
+
 ---
 
-# 26. Fluxo Diário da Equipe
+# 14. Fluxo Diário Resumido
 
-Este é o fluxo que deve ser utilizado na maioria das tarefas.
+## Opção A — Terminal
 
-## Começar
+### 1. Atualizar a develop
 
 ```bash
 git switch develop
-
 git pull
 ```
 
-## Criar a branch
+### 2. Criar a branch
 
-Funcionalidade:
-
-```bash
-git switch -c feature/nome-da-feature
-```
-
-Correção:
+Para uma feature:
 
 ```bash
-git switch -c fix/nome-da-correcao
+git switch -c feature/nome
 ```
 
-## Trabalhar
+ou, para uma correção:
+
+```bash
+git switch -c fix/nome
+```
+
+### 3. Trabalhar no código
 
 Faça as alterações necessárias.
 
-Confira:
+Depois confira:
 
 ```bash
 git status
 ```
 
-## Salvar no Git
+### 4. Commit
 
 ```bash
 git add .
-
 git commit -m "feat: descrição da funcionalidade"
 ```
 
 ou:
 
 ```bash
+git add .
 git commit -m "fix: descrição da correção"
 ```
 
-## Enviar
+### 5. Push
 
 ```bash
 git push -u origin nome-da-branch
 ```
 
-## GitHub
+### 6. Pull Request sem interação
 
-```text
-Abrir Pull Request
-       ↓
-base: develop
-       ↓
-Revisar
-       ↓
-Merge
+```bash
+gh pr create --base develop --head nome-da-branch --title "titulo do Pull Request" --body "Descricao das alteracoes realizadas."
 ```
 
-## Atualizar o computador
+### 7. Conferir o Pull Request
+
+```bash
+gh pr view
+```
+
+### 8. Merge e exclusão da branch remota
+
+```bash
+gh pr merge nome-da-branch --merge --delete-branch
+```
+
+### 9. Atualizar a develop local
 
 ```bash
 git switch develop
-
 git pull
 ```
 
-## Limpar a branch finalizada
+### 10. Apagar a branch local
 
 ```bash
 git branch -d nome-da-branch
+```
 
-git push origin --delete nome-da-branch
+### 11. Limpar referências antigas
 
+```bash
 git fetch --prune
+```
+
+O fluxo completo fica:
+
+```text
+develop
+   ↓
+git pull
+   ↓
+feature/... ou fix/...
+   ↓
+alterar código
+   ↓
+git add .
+   ↓
+git commit
+   ↓
+git push
+   ↓
+gh pr create
+   ↓
+gh pr view
+   ↓
+gh pr merge --merge --delete-branch
+   ↓
+develop
+   ↓
+git pull
+   ↓
+git branch -d
+   ↓
+git fetch --prune
+```
+
+---
+
+## Opção B — GitHub Desktop
+
+```text
+develop
+↓
+Fetch / Pull
+↓
+New Branch
+↓
+feature/... ou fix/...
+↓
+alterar código
+↓
+Changes
+↓
+Commit
+↓
+Publish Branch
+↓
+Create Pull Request
+↓
+revisão
+↓
+Merge
+↓
+Delete Branch
+↓
+voltar para develop
+↓
+Fetch / Pull
+↓
+apagar branch local
+```
+
+---
+
+# 15. Exemplo Completo pelo Terminal
+
+Vamos imaginar uma correção no layout de clientes.
+
+### Atualizar
+
+```bash
+git switch develop
+git pull
+```
+
+### Criar a fix
+
+```bash
+git switch -c fix/layout-clientes
+```
+
+Faça as alterações.
+
+### Conferir e criar commit
+
+```bash
+git status
+git add .
+git commit -m "fix: ajusta layout da tela de clientes"
+```
+
+### Enviar
+
+```bash
+git push -u origin fix/layout-clientes
+```
+
+### Criar Pull Request sem interação
+
+```bash
+gh pr create --base develop --head fix/layout-clientes --title "fix: ajusta layout da tela de clientes" --body "Corrige o layout e o comportamento da tela de clientes."
+```
+
+### Conferir
+
+```bash
+gh pr view
+```
+
+### Fazer merge e apagar a branch remota
+
+```bash
+gh pr merge fix/layout-clientes --merge --delete-branch
+```
+
+### Atualizar a develop
+
+```bash
+git switch develop
+git pull
+```
+
+### Apagar a branch local
+
+```bash
+git branch -d fix/layout-clientes
+```
+
+### Limpar referências
+
+```bash
+git fetch --prune
+```
+
+Pronto.
+
+A correção passou pelo fluxo:
+
+```text
+fix/layout-clientes
+        ↓
+      commit
+        ↓
+       push
+        ↓
+ Pull Request
+        ↓
+      develop
+        ↓
+       merge
+        ↓
+branch removida
 ```
 
 ---
 
 # Regra de Ouro
 
-Antes de começar a programar:
+Antes de começar a alterar o código:
+
+### Nova funcionalidade
 
 ```bash
 git switch develop
 git pull
-git switch -c feature/nome-da-feature
+git switch -c feature/nome
 ```
 
-ou:
+### Correção
 
 ```bash
 git switch develop
 git pull
-git switch -c fix/nome-da-correcao
+git switch -c fix/nome
 ```
 
-**Só depois altere o código.**
+Nunca desenvolva diretamente na `main`.
 
-Se esquecer:
+Evite também desenvolver diretamente na `develop`.
+
+Cada tarefa deve ter sua própria branch.
+
+Se perceber que começou a trabalhar na `develop` por engano e ainda não fez commit:
 
 ```bash
 git stash -u
@@ -1078,4 +1095,6 @@ git switch -c fix/nome
 git stash pop
 ```
 
-Assim mantemos `main` e `develop` organizadas e cada alteração fica isolada em sua própria branch.
+ou crie uma `feature/...`, dependendo do tipo de trabalho.
+
+Assim as branches principais permanecem organizadas e cada alteração passa pelo fluxo de revisão antes de ser integrada.
