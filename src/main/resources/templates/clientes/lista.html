@@ -1,7 +1,211 @@
-<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clientes | AutoGestão Pro</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" th:href="@{/css/app.css}"></head>
-<body><aside class="sidebar"><h4>🚘 AutoGestão Pro</h4><nav><a class="active" href="/clientes">👥 Clientes</a><a href="#">🔧 Serviços</a><a href="#">💰 Financeiro</a></nav></aside>
-<main class="content"><div class="topbar"><div><h2>Clientes</h2><p>Clientes e seus veículos cadastrados</p></div><a class="btn btn-primary" href="/clientes/novo">+ Novo cliente</a></div>
-<div th:if="${sucesso}" class="alert alert-success" th:text="${sucesso}"></div>
-<div class="card panel"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Cliente</th><th>Contato</th><th>Veículos</th><th></th></tr></thead><tbody>
-<tr th:each="c:${clientes}"><td><strong th:text="${c.nome}"></strong><small th:text="${c.cpfCnpj}"></small></td><td><span th:text="${c.telefone}"></span><small th:text="${c.email}"></small></td><td><div th:each="v:${c.veiculos}" class="vehicle"><span class="plate" th:text="${v.placa}"></span> <span th:text="|${v.marca} ${v.modelo ?: ''} ${v.ano ?: ''}|"></span></div><span th:if="${#lists.isEmpty(c.veiculos)}">Nenhum veículo</span></td><td><a class="btn btn-sm btn-outline-primary" th:href="@{/clientes/{id}/veiculos/novo(id=${c.id})}">+ Veículo</a></td></tr>
-<tr th:if="${#lists.isEmpty(clientes)}"><td colspan="4" class="empty">Nenhum cliente cadastrado.</td></tr></tbody></table></div></div></main></body></html>
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Clientes | AutoGestão Pro</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="main-area">
+
+        <!-- TOPBAR -->
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+        <!-- CONTEÚDO -->
+        <main class="page-content">
+
+            <div class="content-container">
+
+                <!-- CABEÇALHO -->
+                <section class="page-header">
+
+                    <div>
+
+                        <h1>Clientes</h1>
+
+                        <div class="breadcrumb-custom">
+                            <span>Início</span>
+                            <span>›</span>
+                            <span>Clientes</span>
+                        </div>
+
+                        <p>
+                            Clientes e seus veículos cadastrados
+                        </p>
+
+                    </div>
+
+                    <a
+                        class="btn btn-primary"
+                        href="/clientes/novo">
+
+                        + Novo cliente
+
+                    </a>
+
+                </section>
+
+
+                <!-- MENSAGEM -->
+                <div
+                    th:if="${sucesso}"
+                    class="alert alert-success"
+                    th:text="${sucesso}">
+                </div>
+
+
+                <!-- PAINEL -->
+                <section class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h2>Clientes cadastrados</h2>
+                            <p>Lista de clientes e veículos</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle">
+
+                            <thead>
+
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Contato</th>
+                                <th>Veículos</th>
+                                <th class="text-end">Ações</th>
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                            <tr th:each="c : ${clientes}">
+
+                                <!-- CLIENTE -->
+                                <td>
+
+                                    <strong th:text="${c.nome}">
+                                    </strong>
+
+                                    <small th:text="${c.cpfCnpj}">
+                                    </small>
+
+                                </td>
+
+
+                                <!-- CONTATO -->
+                                <td>
+
+                                    <span th:text="${c.telefone}">
+                                    </span>
+
+                                    <small th:text="${c.email}">
+                                    </small>
+
+                                </td>
+
+
+                                <!-- VEÍCULOS -->
+                                <td>
+
+                                    <div
+                                        th:each="v : ${c.veiculos}"
+                                        class="vehicle">
+
+                                        <span
+                                            class="plate"
+                                            th:text="${v.placa}">
+                                        </span>
+
+                                        <span
+                                            th:text="|${v.marca} ${v.modelo ?: ''} ${v.ano ?: ''}|">
+                                        </span>
+
+                                    </div>
+
+                                    <span
+                                        class="no-vehicle"
+                                        th:if="${#lists.isEmpty(c.veiculos)}">
+
+                                        Nenhum veículo
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- AÇÕES -->
+                                <td class="text-end">
+
+                                    <a
+                                        class="btn btn-sm btn-outline-primary"
+                                        th:href="@{/clientes/{id}/veiculos/novo(id=${c.id})}">
+
+                                        + Veículo
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- LISTA VAZIA -->
+                            <tr th:if="${#lists.isEmpty(clientes)}">
+
+                                <td
+                                    colspan="4"
+                                    class="empty">
+
+                                    Nenhum cliente cadastrado.
+
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+
+        <!-- FOOTER -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
