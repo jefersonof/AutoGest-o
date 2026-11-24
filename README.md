@@ -35,4 +35,6 @@ Abra `http://localhost:8080`.
 - Relacionamento JPA 1:N entre `clientes` e `veiculos`.
 - Layout responsivo inspirado em painéis AdminLTE.
 
+
 O Hibernate está configurado com `ddl-auto=update`: ele aproveita as tabelas existentes e cria/ajusta o que estiver faltando, sem apagar os dados.
+<!-- Teste de comentário-->

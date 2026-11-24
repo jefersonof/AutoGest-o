@@ -10,7 +10,7 @@ public class Veiculo {
     @NotBlank private String placa;
     @NotBlank private String marca;
     private String modelo;
-    private String ano;
+    private Integer ano;
     @ManyToOne(fetch=FetchType.LAZY, optional=false)
     @JoinColumn(name="cliente_id", nullable=false)
     private Cliente cliente;
@@ -19,6 +19,6 @@ public class Veiculo {
     public String getPlaca(){return placa;} public void setPlaca(String v){placa=v;}
     public String getMarca(){return marca;} public void setMarca(String v){marca=v;}
     public String getModelo(){return modelo;} public void setModelo(String v){modelo=v;}
-    public String getAno(){return ano;} public void setAno(String v){ano=v;}
+    public Integer getAno(){return ano;} public void setAno(Integer v){ano=v;}
     public Cliente getCliente(){return cliente;} public void setCliente(Cliente v){cliente=v;}
 }
