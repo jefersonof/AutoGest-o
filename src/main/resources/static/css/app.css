@@ -926,3 +926,98 @@ form hr {
 .field-full {
     grid-column: span 12;
 }
+
+/* =====================================================
+   PÁGINA MODELO DE LAYOUT
+===================================================== */
+
+.layout-demo-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+.demo-card {
+    min-height: 130px;
+
+    padding: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    background: #fff;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 4px 16px rgba(30, 45, 65, .05);
+}
+
+
+.demo-card small {
+    color: var(--text-light);
+}
+
+
+.demo-card strong {
+    margin: 5px 0;
+
+    font-size: 30px;
+
+    font-weight: 600;
+}
+
+
+.demo-card span {
+    font-size: 13px;
+
+    color: var(--text-light);
+}
+
+
+.layout-code {
+    margin: 0;
+
+    padding: 20px;
+
+    overflow-x: auto;
+
+    background: #172033;
+
+    color: #e6edf7;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+@media (max-width: 900px) {
+
+    .layout-demo-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .layout-demo-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
